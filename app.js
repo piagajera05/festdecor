@@ -48,7 +48,11 @@ connectDB().then(() => {
         mongoUrl: process.env.MONGO_URI,
         dbName: 'festdecor',
       }),
-      cookie: { maxAge: 1000 * 60 * 60 * 3 },
+      cookie: {
+        maxAge: 1000 * 60 * 60 * 3,
+        secure: true,
+        sameSite: "none",
+      },
     })
   );
   mongoose.connect(process.env.MONGO_URI, {
