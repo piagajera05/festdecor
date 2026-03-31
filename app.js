@@ -16,7 +16,7 @@ const app = express();
 require("./config/passport");
 
 // mongodb configuration
-connectDB();
+
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
@@ -33,21 +33,35 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
 // ✅ FIXED SESSION CONFIG
-app.use(
-  session({
-    secret: process.env.SESSION_SECRET || "myfallbacksecret",
-    resave: false,
-    saveUninitialized: false,
-    store: MongoStore.create({
-      mongoUrl: process.env.MONGO_URI,
-    }),
-    cookie: { maxAge: 60 * 1000 * 60 * 3 },
-  })
-);
 
-app.use(flash());
-app.use(passport.initialize());
-app.use(passport.session());
+
+connectDB().then(() => {
+  console.log("DB connected, starting app...");
+
+  app.use(
+    session({
+      secret: process.env.SESSION_SECRET || "myfallbacksecret",
+      resave: false,
+      saveUninitialized: false,
+      store: MongoStore.create({
+        mongoUrl: process.env.MONGO_URI,
+        dbName: 'festdecor',
+      }),
+      cookie: { maxAge: 1000 * 60 * 60 * 3 },
+    })
+  );
+  mongoose.connect(process.env.MONGO_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  });
+  app.use(flash());
+  app.use(passport.initialize());
+  app.use(passport.session());
+
+  app.listen(port, () => {
+    console.log("Server running at port " + port);
+  });
+});
 
 // global variables across routes
 app.use(async (req, res, next) => {
@@ -113,8 +127,5 @@ app.use(function (err, req, res, next) {
 var port = process.env.PORT || 3001;
 app.set("port", port);
 
-app.listen(port, () => {
-  console.log("Server running at port " + port);
-});
 
 module.exports = app;
