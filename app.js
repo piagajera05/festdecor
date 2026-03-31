@@ -35,6 +35,7 @@ app.use(express.static(path.join(__dirname, "public")));
 
 // ✅ FIXED SESSION CONFIG
 
+app.set("trust proxy", 1);
 
 connectDB().then(() => {
   console.log("DB connected, starting app...");
