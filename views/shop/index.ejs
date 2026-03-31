@@ -73,14 +73,22 @@
       <div class="single-product d-flex flex-column h-100">
         <a
           class="title-link"
-          href="/products/<%=product.category.slug%>/<%=product._id%>"
+          <% if (product.category) { %>
+            href="/products/<%=product.category.slug%>/<%=product._id%>"
+          <% } else { %>
+            href="/products/<%=product._id%>"
+          <% } %>
         >
           <img src="<%= product.imagePath %>" alt="Bag" class="img-fluid"
         /></a> 
         <div class="product-info">
           <a
             class="title-link"
-            href="/products/<%=product.category.slug%>/<%=product._id%>"
+            <% if (product.category) { %>
+              href="/products/<%=product.category.slug%>/<%=product._id%>"
+            <% } else { %>
+              href="/products/<%=product._id%>"
+            <% } %>
           >
             <h6 class="mt-2 mb-2"><%= product.title %></h6></a
           >
