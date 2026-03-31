@@ -36,6 +36,7 @@ app.use(express.static(path.join(__dirname, "public")));
 // ✅ FIXED SESSION CONFIG
 
 app.set("trust proxy", 1);
+mongoose.set('strictQuery', true);
 
 connectDB().then(() => {
   console.log("DB connected, starting app...");
