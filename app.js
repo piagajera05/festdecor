@@ -80,7 +80,7 @@ app.use(async (req, res, next) => {
     next();
   } catch (error) {
     console.log(error);
-    res.redirect("/");
+    next(error);
   }
 });
 
