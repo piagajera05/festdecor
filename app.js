@@ -11,6 +11,7 @@ const flash = require("connect-flash");
 const Category = require("./models/category");
 const MongoStore = require("connect-mongo");
 const connectDB = require("./config/db");
+console.log("APP VERSION 2 - SESSION SECRET:", process.env.SESSION_SECRET);
 
 const app = express();
 require("./config/passport");
