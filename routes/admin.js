@@ -16,7 +16,7 @@ const adminBro = new AdminBro({
   rootPath: "/admin",
   branding: {
     companyName: "FestDecor",
-    logo: "/images/shop-icon.png",
+    logo: "/images/shop-icon.PNG",
     softwareBrothers: false,
   },
   resources: [
