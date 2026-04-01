@@ -69,6 +69,11 @@ app.use((req, res, next) => {
   res.locals.csrfToken = req.csrfToken();
   next();
 });
+app.use((req, res, next) => {
+  if (req.path === "/checkout") return next(); // skip CSRF for Stripe
+  csrfProtection(req, res, next);
+});
+
 
 // global variables
 app.use(async (req, res, next) => {
