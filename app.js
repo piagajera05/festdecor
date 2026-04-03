@@ -74,7 +74,11 @@ app.use((req, res, next) => {
 });
 // make csrf token available in views
 app.use((req, res, next) => {
-  res.locals.csrfToken = req.csrfToken();
+  if (typeof req.csrfToken === "function") {
+    res.locals.csrfToken = req.csrfToken();
+  } else {
+    res.locals.csrfToken = null;
+  }
   next();
 });
 // app.use((req, res, next) => {
