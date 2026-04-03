@@ -23,8 +23,7 @@ app.set("view engine", "ejs");
 
 // basic middleware
 app.use(logger("dev"));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
@@ -55,7 +54,9 @@ app.use(
 // passport
 app.use(passport.initialize());
 app.use(passport.session());
-
+app.use("/admin", adminRouter);
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 // flash
 app.use(flash());
 
@@ -132,7 +133,6 @@ const productsRouter = require("./routes/products");
 const usersRouter = require("./routes/user");
 const pagesRouter = require("./routes/pages");
 
-app.use("/admin", adminRouter);
 app.use("/products", productsRouter);
 app.use("/user", usersRouter);
 app.use("/pages", pagesRouter);
