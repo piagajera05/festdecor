@@ -54,6 +54,8 @@ app.use(
 // passport
 app.use(passport.initialize());
 app.use(passport.session());
+const adminRouter = require("./routes/admin");
+
 app.use("/admin", adminRouter);
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -127,7 +129,6 @@ app.use((req, res, next) => {
 });
 
 // routes
-const adminRouter = require("./routes/admin");
 const indexRouter = require("./routes/index");
 const productsRouter = require("./routes/products");
 const usersRouter = require("./routes/user");
