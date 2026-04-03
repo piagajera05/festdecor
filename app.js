@@ -62,17 +62,25 @@ app.use(flash());
 // CSRF (IMPORTANT: AFTER session)
 const csrf = require("csurf");
 const csrfProtection = csrf();
-app.use(csrfProtection);
-
+// app.use(csrfProtection);
+app.use((req, res, next) => {
+  if (
+    req.path.startsWith("/admin")    // ✅ skip admin
+       // optional
+  ) {
+    return next();
+  }
+  csrfProtection(req, res, next);
+});
 // make csrf token available in views
 app.use((req, res, next) => {
   res.locals.csrfToken = req.csrfToken();
   next();
 });
-app.use((req, res, next) => {
-  if (req.path === "/checkout") return next(); // skip CSRF for Stripe
-  csrfProtection(req, res, next);
-});
+// app.use((req, res, next) => {
+//   if (req.path === "/checkout") return next(); // skip CSRF for Stripe
+//   csrfProtection(req, res, next);
+// });
 
 
 // global variables
